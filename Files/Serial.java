@@ -9,10 +9,18 @@ public class Serial{
 
         SerialPort serial = SerialPort.getCommPorts()[0];
 
-        InputStream comPortA ;
+        InputStream message;
         int readAscii;
 
         try{
+            System.out.println("Opening port: "+serial.getSystemPortName());
+            serial.openPort();
+            message = serial.getInputStream();
+            do{
+                readAscii = message.read();
+                System.out.print((char) readAscii);
+            }while(readAscii!=10);
+            serial.closePort();
 
         }catch(IOException ex){
             System.out.println("Error opening the serial port: "+ex.getMessage());
